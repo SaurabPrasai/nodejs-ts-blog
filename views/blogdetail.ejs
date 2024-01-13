@@ -1,0 +1,80 @@
+<%- include("partials/header.ejs") %>
+
+    <body>
+        <%- include("partials/navbar.ejs") %>
+
+            <div class="container mt-3">
+                <h2>
+                    <%= blog.subject %>
+                </h2>
+                <p>
+                    <%= blog.content %>
+                </p>
+                  <!-- writer name -->
+                  <% users.map((user)=>{%>
+                    <% if(user._id==blog.user_id){%>
+                        <p class="writer"><i class="fa-regular fa-pen-to-square"></i><%= user.username  %> </p>
+                   <% } %>
+                  <%  }) %>
+                
+
+                <h2>Comments</h2>
+                <div class="comments">
+                    <div class="oldComments">
+                        <% if(comments.length){%>
+                            <% comments.map((comment)=>{  %>
+                                <div class="bg-body-tertiary">
+                                    <p>
+                                        <%= comment.comment %>
+                                    </p>
+                                    <% users.map((user)=>{%>
+                                           <% if(user._id==comment.user_id){%>
+                                                <p class="writer"><i class="fa-regular fa-pen-to-square"></i><%= user.username  %></p>
+
+                                                <!-- delete btn -->
+                                                <% if(isAuth){%>
+                                                    <% if(isAuth[1]==comment.user_id) {%>
+                                                        <p class="writer"><form action="/comment/delete" method="post">
+                                                            <input type="hidden" name="_id" id="" value="<%= comment._id  %>">
+                                                            <input type="hidden" name="blog_id" id="blog_id" value="<%= blog._id  %>">
+                                                            <button><i class="fa-solid fa-trash"></i></button>
+                                                        </form></p>
+                                                 <%   } %>
+                                              <%  } %>
+                                              
+                                               
+                                            <%}%>
+                                   <% }) %>
+                                    
+                                </div>
+                             <%   }) %>
+                                <% }else{%>
+                                    <p>No comments!</p>
+                               <% } %>
+
+
+
+                    </div>
+                    <% if(isAuth){ %>
+
+                        <div class="newComment">
+                            <form action="/comment" method="post">
+                                <input type="hidden" name="blog_id" value="<%= blog._id  %>">
+                                <input type="hidden" name="user_id" value="<%= isAuth[1]  %>">
+                                <div>
+                                    <textarea name="comment" id="" placeholder="write your comment"></textarea>
+                                    <button class="btn btn-primary">Post</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <% }else {%>
+                            <p>please <a href="/login">login </a> to comment on this blog.</p>
+                            <% } %>
+
+                </div>
+            </div>
+
+    </body>
+
+    </html>

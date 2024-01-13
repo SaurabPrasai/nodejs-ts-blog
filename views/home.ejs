@@ -1,0 +1,26 @@
+<%- include("partials/header.ejs")  %>
+<body>
+<%- include("partials/navbar.ejs")  %>
+<div class="container mt-3">
+    <h2>Blogs</h2>
+    <% if(blogs.length){%>
+          <% blogs.map((blog)=>{%>
+            <a href="/blog/<%= blog._id  %>" class="singleBlog">
+             <div class="container bg-body-tertiary blog">
+                    <h3><%= blog.subject  %></h3>
+                    <!-- writer name -->
+                    <% users.map((user)=>{%>
+                    <% if(user._id==blog.user_id){%>
+                        <p><i class="fa-regular fa-pen-to-square"></i> <%= user.username %>     </p>
+                   <% } %>
+                  <%  }) %>
+             </div>
+            </a>
+        <%  }) %>
+  <%  }else{%>
+           <p>No blogs available!</p>
+      <%} %>  
+</div>
+
+</body>
+</html>

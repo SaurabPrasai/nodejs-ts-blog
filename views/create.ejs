@@ -1,0 +1,23 @@
+<%- include("partials/header.ejs")  %>
+
+<body>
+<%- include("partials/navbar.ejs")  %>
+
+    <div class="container mt-3">
+        <h2>Create</h2>
+    <form action="/blogs" method="post">
+      <div class="mb-3 ">
+        <input type="hidden" name="user_id" class="form-control" id="user_id" aria-describedby="username" value="<%= isAuth[1]  %>" required/>
+      </div>
+        <div class="mb-3 ">
+          <input type="text" name="subject" class="form-control" id="subject" aria-describedby="subject" placeholder="write your subject" required/>
+        </div>
+        <div class="mb-3">
+          <textarea name="content" id="" class="container" placeholder="write your content" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+</body>
+</html>
